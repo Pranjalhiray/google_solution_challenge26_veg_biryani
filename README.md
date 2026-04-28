@@ -80,7 +80,15 @@ From the root directory, sync your database schema:
 npx prisma migrate dev --name init
 ```
 
-#### 5. Run the Application
+#### 5. Run with Docker (Alternative)
+If you prefer using Docker to manage your database and backend:
+```bash
+cd apps/api-server
+docker-compose up --build
+```
+*Note: This will spin up the Node.js API and a local PostgreSQL instance.*
+
+#### 6. Run Manually (Best for Frontend Dev)
 You can run both apps from the root using workspace commands:
 
 | Command | Action |
@@ -90,11 +98,10 @@ You can run both apps from the root using workspace commands:
 
 ---
 
-## 🚢 Deployment Strategy
-
-- **Backend:** Deployed to **Google Cloud Run** using `gcloud run deploy`.
-- **Frontend:** Hosted on **Firebase Hosting** for high availability.
-- **Database:** Scalable **Supabase PostgreSQL** with PostGIS.
+## 🏗️ Technical Architecture
+- **Turborepo:** Optimized monorepo management.
+- **Agentic AI:** A chain of Gemini-powered agents for data extraction.
+- **PostGIS:** Specialized geospatial database for finding nearby help.
 
 ---
 

@@ -1,17 +1,27 @@
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 export const generateJSON = async (prompt, imageParts = []) => {
-  const contents = [...imageParts, prompt];
-  const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
-    contents,
-    config: { responseMimeType: 'application/json' }
-  });
+  try {
+    // Standardize input for the v1 SDK
+    const parts = [{ text: prompt }];
+    
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts }],
+      generationConfig: {
+        responseMimeType: "application/json",
+      },
+    });
 
-  const raw = response.text || '';
-  const match = raw.match(/\{[\s\S]*\}/);
-  if (!match) throw new Error('Gemini returned no valid JSON');
-  return JSON.parse(match[0]);
+    const response = await result.response;
+    const raw = response.text();
+    
+    const jsonStr = raw.replace(/```json|```/g, "").trim();
+    return JSON.parse(jsonStr);
+  } catch (err) {
+    console.error('Gemini Agent Error:', err);
+    throw err;
+  }
 };

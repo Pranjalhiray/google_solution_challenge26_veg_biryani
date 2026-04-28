@@ -96,12 +96,22 @@ You can run both apps from the root using workspace commands:
 | `npm run dev:api` | Starts the Express Backend (Port 5000) |
 | `npm run dev:web` | Starts the Angular Dashboard (Port 4200) |
 
+#### 7. Mobile App (Flutter)
+The field reporting tool is built with Flutter. To run it:
+```bash
+cd apps/mobile-client
+flutter pub get
+# Connect a physical device or start an emulator
+flutter run
+```
+
 ---
 
 ## 🏗️ Technical Architecture
 - **Turborepo:** Optimized monorepo management.
 - **Agentic AI:** A chain of Gemini-powered agents for data extraction.
 - **PostGIS:** Specialized geospatial database for finding nearby help.
+- **Flutter:** High-performance cross-platform mobile reporting.
 
 ---
 

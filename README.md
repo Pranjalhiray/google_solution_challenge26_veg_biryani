@@ -43,28 +43,75 @@ Our proprietary pipeline transforms messy data into structured JSON in milliseco
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Local Setup Guide
 
-### Prerequisites
-- Node.js 20+
-- Google Cloud Project with Gemini API enabled
-- Firebase Project
+Follow these steps to get the environment running locally for development.
 
-### Quick Install
+### 📋 Prerequisites
+- **Node.js:** v20.x or higher
+- **Package Manager:** npm
+- **Database:** A PostgreSQL instance (Supabase is used in production)
+- **GCP Project:** Enabled Gemini API, Vision API, and Speech-to-Text
+
+### 🛠️ Step-by-Step Installation
+
+#### 1. Clone the Repository
 ```bash
-# 1. Clone the repo
 git clone https://github.com/0xYuvi/google_solution_challenge26_veg_biryani
-
-# 2. Install dependencies
-npm install
-
-# 3. Setup Environment
-# Copy .env.example to apps/api-server/.env and add your keys
+cd google_solution_challenge26_veg_biryani
 ```
 
-### Deployment
-- **Backend:** `gcloud run deploy`
-- **Frontend:** `npx firebase deploy`
+#### 2. Install Root Dependencies
+```bash
+npm install
+```
+
+#### 3. Environment Configuration
+Navigate to the API server and set up your `.env` file:
+```bash
+cd apps/api-server
+cp .env.example .env
+# Open .env and add your DATABASE_URL, GEMINI_API_KEY, and Cloudinary keys
+```
+
+#### 4. Database Setup (Prisma)
+From the root directory, sync your database schema:
+```bash
+npx prisma migrate dev --name init
+```
+
+#### 5. Run with Docker (Alternative)
+If you prefer using Docker to manage your database and backend:
+```bash
+cd apps/api-server
+docker-compose up --build
+```
+*Note: This will spin up the Node.js API and a local PostgreSQL instance.*
+
+#### 6. Run Manually (Best for Frontend Dev)
+You can run both apps from the root using workspace commands:
+
+| Command | Action |
+| :--- | :--- |
+| `npm run dev:api` | Starts the Express Backend (Port 5000) |
+| `npm run dev:web` | Starts the Angular Dashboard (Port 4200) |
+
+#### 7. Mobile App (Flutter)
+The field reporting tool is built with Flutter. To run it:
+```bash
+cd apps/mobile-client
+flutter pub get
+# Connect a physical device or start an emulator
+flutter run
+```
+
+---
+
+## 🏗️ Technical Architecture
+- **Turborepo:** Optimized monorepo management.
+- **Agentic AI:** A chain of Gemini-powered agents for data extraction.
+- **PostGIS:** Specialized geospatial database for finding nearby help.
+- **Flutter:** High-performance cross-platform mobile reporting.
 
 ---
 

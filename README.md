@@ -43,28 +43,58 @@ Our proprietary pipeline transforms messy data into structured JSON in milliseco
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Local Setup Guide
 
-### Prerequisites
-- Node.js 20+
-- Google Cloud Project with Gemini API enabled
-- Firebase Project
+Follow these steps to get the environment running locally for development.
 
-### Quick Install
+### 📋 Prerequisites
+- **Node.js:** v20.x or higher
+- **Package Manager:** npm
+- **Database:** A PostgreSQL instance (Supabase is used in production)
+- **GCP Project:** Enabled Gemini API, Vision API, and Speech-to-Text
+
+### 🛠️ Step-by-Step Installation
+
+#### 1. Clone the Repository
 ```bash
-# 1. Clone the repo
 git clone https://github.com/0xYuvi/google_solution_challenge26_veg_biryani
-
-# 2. Install dependencies
-npm install
-
-# 3. Setup Environment
-# Copy .env.example to apps/api-server/.env and add your keys
+cd google_solution_challenge26_veg_biryani
 ```
 
-### Deployment
-- **Backend:** `gcloud run deploy`
-- **Frontend:** `npx firebase deploy`
+#### 2. Install Root Dependencies
+```bash
+npm install
+```
+
+#### 3. Environment Configuration
+Navigate to the API server and set up your `.env` file:
+```bash
+cd apps/api-server
+cp .env.example .env
+# Open .env and add your DATABASE_URL, GEMINI_API_KEY, and Cloudinary keys
+```
+
+#### 4. Database Setup (Prisma)
+From the root directory, sync your database schema:
+```bash
+npx prisma migrate dev --name init
+```
+
+#### 5. Run the Application
+You can run both apps from the root using workspace commands:
+
+| Command | Action |
+| :--- | :--- |
+| `npm run dev:api` | Starts the Express Backend (Port 5000) |
+| `npm run dev:web` | Starts the Angular Dashboard (Port 4200) |
+
+---
+
+## 🚢 Deployment Strategy
+
+- **Backend:** Deployed to **Google Cloud Run** using `gcloud run deploy`.
+- **Frontend:** Hosted on **Firebase Hosting** for high availability.
+- **Database:** Scalable **Supabase PostgreSQL** with PostGIS.
 
 ---
 
